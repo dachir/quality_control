@@ -129,9 +129,12 @@ app_license = "mit"
 # ---------------
 # Override standard doctype classes
 
-# override_doctype_class = {
-# 	"ToDo": "custom_app.overrides.CustomToDo"
-# }
+override_doctype_class = {
+    "Item": "quality_control.overrides.item.CustomItem",
+ 	"Quality Inspection": "quality_control.overrides.quality_inspection.CustomQualityInspection",
+    "Purchase Receipt": "quality_control.overrides.purchase_receipt.CustomPurchaseReceipt",
+    "Stock Entry": "quality_control.overrides.stock_entry.CustomStockEntry",
+}
 
 # Document Events
 # ---------------
@@ -242,3 +245,8 @@ app_license = "mit"
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
+fixtures = [
+    {"dt": "Custom Field", "filters": [["module", "=", "Quality Control"]]},
+    {"dt": "Client Script", "filters": [["enabled", "=", 1],["module", "=", "Quality Control"]]},
+    {"dt": "Server Script", "filters": [["disabled", "=", 0],["module", "=", "Quality Control"]]},
+]

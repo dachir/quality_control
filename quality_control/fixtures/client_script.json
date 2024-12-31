@@ -1,0 +1,24 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Purchase Receipt",
+  "enabled": 1,
+  "modified": "2024-11-16 11:35:19.903723",
+  "module": "Quality Control",
+  "name": "Get Item Default Status for PR",
+  "script": "frappe.ui.form.on('Purchase Receipt Item', {\n\titem_code(frm, cdt, cdn) {\n\t\t const row = locals[cdt][cdn];\n\t\t frappe.call({\n            method: \"quality_control.overrides.item.get_item_default_quality_status\",\n            args: {\n                item: row.item_code\n            },\n            callback: function(response) {\n                if (response.message) {\n                    row.quality_status = response.message;\n                    row.from_quality_status = response.message;\n                    frm.refresh_field(\"items\")\n                }\n            }\n        });\n\t}\n})",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Item",
+  "enabled": 1,
+  "modified": "2024-11-16 13:49:13.451628",
+  "module": "Quality Control",
+  "name": "Enable Quality Status",
+  "script": "frappe.ui.form.on('Item', {\n\titem_group: function(frm) {\n        if (frm.doc.item_group) {\n            // Fetch the 'custom_control_quality' from the selected Item Group\n            frappe.db.get_value('Item Group', frm.doc.item_group, 'custom_control_quality')\n                .then(response => {\n                    const custom_control_quality = response.message.custom_control_quality;\n\n                    // Set the fetched value in the current form\n                    frm.set_value('custom_control_quality', custom_control_quality);\n                })\n                .catch(error => {\n                    console.error('Error fetching custom_control_quality:', error);\n                });\n        }\n    }\n})",
+  "view": "Form"
+ }
+]
