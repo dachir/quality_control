@@ -12,28 +12,34 @@ class CustomStockEntry(StockEntry):
                     i.to_quality_status = "Q"
 
                 if self.custom_control_quality == 0:
-                    query = """
-                        SELECT DISTINCT sle.quality_status
-                        FROM `tabStock Ledger Entry` sle
-                        INNER JOIN `tabSerial and Batch Bundle` sbb ON sbb.name = sle.serial_and_batch_bundle
-                        INNER JOIN `tabSerial and Batch Entry` sbe ON sbe.parent = sbb.name
-                        WHERE sle.warehouse = %(warehouse)s 
-                        AND sbe.batch_no = %(batch_no)s 
-                        AND sle.quality_status = %(quality_status)s
-                    """
-                    params = {
-                        "warehouse": i.s_warehouse,
-                        "batch_no": i.batch_no,
-                        "quality_status": i.quality_status
-                    }
-                    results = frappe.db.sql(query, params, as_dict=True)
+                    if not i.quality_status:
+                        i.quality_status = "A"
+                    i.to_quality_status = i.quality_status
+                    
+                #    query = """
+                #        SELECT DISTINCT sle.quality_status
+                #        FROM `tabStock Ledger Entry` sle
+                #        INNER JOIN `tabSerial and Batch Bundle` sbb ON sbb.name = sle.serial_and_batch_bundle
+                #        INNER JOIN `tabSerial and Batch Entry` sbe ON sbe.parent = sbb.name
+                #        WHERE sle.warehouse = %(warehouse)s 
+                #        AND sbe.batch_no = %(batch_no)s 
+                #        AND sle.quality_status = %(quality_status)s
+                #        AND sbb.item_code = %(item_code)s
+                #    """
+                #    params = {
+                #        "warehouse": i.s_warehouse,
+                #        "batch_no": i.batch_no,
+                #        "quality_status": i.quality_status,
+                #        "item_code": i.item_code,
+                #    }
+                #    results = frappe.db.sql(query, params, as_dict=True)
 
-                    if results:
-                        i.to_quality_status = results[0].quality_status
-                    else:
-                        frappe.throw(
-                            f"There is no stock status '{i.quality_status}' for item '{i.item_code}'"
-                        )
+                #    if results:
+                #        i.to_quality_status = results[0].quality_status
+                #    else:
+                #        frappe.throw(
+                #            f"There is no stock status '{i.quality_status}' for item '{i.item_code}'"
+                #        )
 
             elif self.stock_entry_type == "Manufacture":
                 # Fetch quality control status for the item
