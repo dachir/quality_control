@@ -10,8 +10,7 @@ class CustomStockEntry(StockEntry):
                 # Handle custom recontrol case first
                 if i.custom_recontrol == 1:
                     i.to_quality_status = "Q"
-
-                if self.custom_control_quality == 0:
+                elif self.custom_control_quality == 0:
                     if not i.quality_status:
                         i.quality_status = "A"
                     i.to_quality_status = i.quality_status
@@ -43,9 +42,12 @@ class CustomStockEntry(StockEntry):
 
             elif self.stock_entry_type == "Manufacture":
                 # Fetch quality control status for the item
-                quality_control = frappe.db.get_value("Item", i.item_code, "quality_control")
-                if i.t_warehouse and quality_control == 1:
-                    i.to_quality_status = "Q"
+                if i.branch == "Kinshasa":
+                    quality_control = frappe.db.get_value("Item", i.item_code, "quality_control")
+                    if i.t_warehouse and quality_control == 1:
+                        i.to_quality_status = "Q"
+                else:
+                    i.to_quality_status = "A"
 
 
 
