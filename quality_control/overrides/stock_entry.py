@@ -3,14 +3,14 @@ from frappe.utils import flt
 from erpnext.stock.doctype.stock_entry.stock_entry import StockEntry
 
 class CustomStockEntry(StockEntry):
-
+        
     def before_save(self):
-        for i in self.items:
-            # Handle custom recontrol case first
-            if i.custom_recontrol == 1:
-                i.to_quality_status = "Q"
-
+        for i in self.items:             
             if self.stock_entry_type == "Material Transfer":
+                # Handle custom recontrol case first
+                if i.custom_recontrol == 1:
+                    i.to_quality_status = "Q"
+
                 if self.custom_control_quality == 0:
                     query = """
                         SELECT DISTINCT sle.quality_status
@@ -46,6 +46,7 @@ class CustomStockEntry(StockEntry):
 
 
     def on_submit(self):
+        super().on_submit()
         for i in self.items:
             if i.to_quality_status == "Q":
                 qc_doc = frappe.get_doc({
