@@ -19,7 +19,7 @@ def get_filtered_batches(doctype, txt, searchfield, start, page_len, filters):
 	# SQL query to fetch filtered batches
 	query = """
 		SELECT b.name, sbe.batch_no,
-			b.reference_name, 
+			sle.voucher_no as reference_name, 
 			sle.serial_and_batch_bundle, 
 			b.batch_qty,
 			b.item
@@ -28,7 +28,7 @@ def get_filtered_batches(doctype, txt, searchfield, start, page_len, filters):
 		INNER JOIN `tabSerial and Batch Entry` sbe ON sbe.parent = sbb.name
 		INNER JOIN tabBatch b ON b.name = sbe.batch_no
 		LEFT JOIN (SELECT * FROM `tabQuality Control` WHERE docstatus <> 2) qc ON qc.batch_no = b.name
-		WHERE sle.quality_status = 'Q' AND qc.name IS NULL	AND sle.warehouse LIKE %(warehouse)s AND b.reference_name LIKE %(reference_name)s
+		WHERE sle.quality_status = 'Q' AND qc.name IS NULL	AND sle.warehouse LIKE %(warehouse)s AND sle.voucher_no LIKE %(reference_name)s
 		AND b.name LIKE %(name)s AND b.item LIKE %(item)s
 		GROUP BY sbe.batch_no
 		ORDER BY sle.creation DESC

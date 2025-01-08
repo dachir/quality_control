@@ -43,7 +43,7 @@ class CustomStockEntry(StockEntry):
             elif self.stock_entry_type == "Manufacture":
                 # Fetch quality control status for the item
                 if i.branch == "Kinshasa":
-                    quality_control = frappe.db.get_value("Item", i.item_code, "quality_control")
+                    quality_control = frappe.db.get_value("Item", i.item_code, "custom_control_quality")
                     if i.t_warehouse and quality_control == 1:
                         i.to_quality_status = "Q"
                 else:
@@ -63,7 +63,7 @@ class CustomStockEntry(StockEntry):
                     "company": self.company,
                     "item_code": i.item_code,
                     "inspection_type": "Incoming",
-                    "reference_type": "Purchase Receipt",
+                    "reference_type": self.doctype,
                     "reference_name": self.name,
                 })
 
