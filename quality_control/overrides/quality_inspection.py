@@ -29,17 +29,18 @@ class CustomQualityInspection(QualityInspection):
     def change_status(self, new_status):
         pr_details = frappe.db.sql(
             """
-            SELECT DISTINCT warehouse, cost_center
+            SELECT DISTINCT warehouse, cost_center, branch
             FROM `tabPurchase Receipt Item` 
             WHERE parent = %(reference_name)s
             UNION
-            SELECT DISTINCT IFNULL(s_warehouse,t_warehouse) AS warehouse, cost_center
+            SELECT DISTINCT IFNULL(s_warehouse,t_warehouse) AS warehouse, cost_center, branch
             FROM `tabStock Entry Detail` 
             WHERE parent = %(reference_name)s
             """, {"reference_name": self.reference_name}, as_dict=1
         )
         warehouse = pr_details[0].warehouse
         cost_center = pr_details[0].cost_center
+        branch = pr_details[0].branch
         try:
             # Create a new Stock Entry of type "Material Transfer"
             stock_entry = frappe.get_doc({
@@ -57,6 +58,7 @@ class CustomQualityInspection(QualityInspection):
                     "s_warehouse": warehouse,
                     "t_warehouse": warehouse,
                     "cost_center": cost_center,
+                    "branch": branch,
                     "quality_status": "Q",
                     "to_quality_status": new_status,
                 }]
