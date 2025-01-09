@@ -10,10 +10,12 @@ class CustomStockEntry(StockEntry):
                 # Handle custom recontrol case first
                 if i.custom_recontrol == 1:
                     i.to_quality_status = "Q"
+                    frappe.db.set_value("Stock Entry Detail", i.name, "to_quality_status", "Q")
                 elif self.custom_control_quality == 0:
                     if not i.quality_status:
                         i.quality_status = "A"
                     i.to_quality_status = i.quality_status
+                    frappe.db.set_value("Stock Entry Detail", i.name, "to_quality_status", i.quality_status)
                     
                 #    query = """
                 #        SELECT DISTINCT sle.quality_status
@@ -46,8 +48,10 @@ class CustomStockEntry(StockEntry):
                     quality_control = frappe.db.get_value("Item", i.item_code, "custom_control_quality")
                     if i.t_warehouse and quality_control == 1:
                         i.to_quality_status = "Q"
+                        frappe.db.set_value("Stock Entry Detail", i.name, "to_quality_status", "Q")
                 else:
                     i.to_quality_status = "A"
+                    frappe.db.set_value("Stock Entry Detail", i.name, "to_quality_status", "Q")
 
 
 
