@@ -49,6 +49,7 @@ class CustomQualityInspection(QualityInspection):
                 "posting_date": self.report_date,
                 "company": self.custom_company,
                 "remarks": f"Status change based on Quality Inspection: {self.name}",
+                "branch": branch,
                 "items": [{
                     "item_code": self.item_code,
                     "qty": flt(self.custom_process_qty),
