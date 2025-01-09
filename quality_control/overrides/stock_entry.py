@@ -27,7 +27,7 @@ class CustomStockEntry(StockEntry):
                         frappe.db.set_value("Stock Entry Detail", i.name, "to_quality_status", "Q")
                 else:
                     i.to_quality_status = "A"
-                    frappe.db.set_value("Stock Entry Detail", i.name, "to_quality_status", "Q")
+                    frappe.db.set_value("Stock Entry Detail", i.name, "to_quality_status", "A")
 
 
 
