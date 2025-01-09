@@ -11,7 +11,7 @@ class CustomStockEntry(StockEntry):
                 if i.custom_recontrol == 1:
                     i.to_quality_status = "Q"
                     frappe.db.set_value("Stock Entry Detail", i.name, "to_quality_status", "Q")
-                elif self.custom_control_quality == 0:
+                elif self.custom_control_quality == 0 and self.custom_status_change == 0:
                     if not i.quality_status:
                         i.quality_status = "A"
                         frappe.db.set_value("Stock Entry Detail", i.name, "quality_status", "A")
@@ -28,8 +28,6 @@ class CustomStockEntry(StockEntry):
                 else:
                     i.to_quality_status = "A"
                     frappe.db.set_value("Stock Entry Detail", i.name, "to_quality_status", "A")
-
-
 
 
 

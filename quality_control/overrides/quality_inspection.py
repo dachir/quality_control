@@ -52,6 +52,7 @@ class CustomQualityInspection(QualityInspection):
                 "branch": branch,
                 "from_warehouse": warehouse,
                 "to_warehouse": warehouse,
+                "custom_status_change": 1,
                 "items": [{
                     "item_code": self.item_code,
                     "qty": flt(self.custom_process_qty),
