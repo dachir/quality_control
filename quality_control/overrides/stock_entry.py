@@ -30,6 +30,12 @@ class CustomStockEntry(StockEntry):
                     i.to_quality_status = "A"
                     frappe.db.set_value("Stock Entry Detail", i.name, "to_quality_status", "A")
 
+            elif self.stock_entry_type == "Material Transfer for Manufacture":
+                i.quality_status = "A"
+                i.to_quality_status = "A"
+                frappe.db.set_value("Stock Entry Detail", i.name, "quality_status", "A")
+                frappe.db.set_value("Stock Entry Detail", i.name, "to_quality_status", "A")
+
             elif self.stock_entry_type in ["Material Receipt", "Material Issue"]:
                 i.to_quality_status = i.quality_status
                 frappe.db.set_value("Stock Entry Detail", i.name, "to_quality_status", i.quality_status)
