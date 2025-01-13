@@ -12,6 +12,7 @@
   "quality_inspection_template",
   "manual_inspection",
   "amended_from",
+  "status",
   "column_break_4",
   "item_code",
   "batch_no",
@@ -134,6 +135,14 @@
   {
    "fieldname": "column_break_zzcg",
    "fieldtype": "Column Break"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Status",
+   "options": "Completed\nPartial\nNot Started\nDraft\nCancelled"
   }
  ],
  "icon": "fa fa-search",
@@ -145,7 +154,7 @@
    "link_fieldname": "custom_quality_control"
   }
  ],
- "modified": "2024-11-15 17:25:17.569127",
+ "modified": "2025-01-13 10:46:08.714686",
  "modified_by": "Administrator",
  "module": "Quality Control",
  "name": "Quality Control",
@@ -171,5 +180,22 @@
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "ASC",
- "states": []
+ "states": [
+  {
+   "color": "Orange",
+   "title": "Draft"
+  },
+  {
+   "color": "Light Blue",
+   "title": "Not Started"
+  },
+  {
+   "color": "Blue",
+   "title": "Partial"
+  },
+  {
+   "color": "Green",
+   "title": "Completed"
+  }
+ ]
 }

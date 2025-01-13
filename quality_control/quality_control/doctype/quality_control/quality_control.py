@@ -6,7 +6,9 @@ from frappe.model.document import Document
 
 
 class QualityControl(Document):
-	pass
+	def on_submit(self):
+		#Status Management
+		frappe.db.set_value('Quality Control', self.name, 'status', "Not Started")
 
 
 @frappe.whitelist()

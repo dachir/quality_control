@@ -18,6 +18,16 @@ class CustomQualityInspection(QualityInspection):
         frappe.db.set_value('Quality Inspection', self.name, 'custom_stock_entry', stock_entry_name)
         frappe.db.set_value('Quality Control', self.custom_quality_control, 'balance_qty', balance_qty)
 
+        #Status Management
+        qc_doc = frappe.get_doc('Quality Control', self.custom_quality_control)
+        if qc_doc.batch_qty == qc_doc.balance_qty:
+            frappe.db.set_value('Quality Control', self.custom_quality_control, 'status', "Not Started")
+        else:
+            if qc_doc.balance_qty > 0:
+                frappe.db.set_value('Quality Control', self.custom_quality_control, 'status', "Partial")
+            elif qc_doc.balance_qty <= 0:
+                frappe.db.set_value('Quality Control', self.custom_quality_control, 'status', "Completed")
+
 
     def on_cancel(self):
         stock_entry_name = self.change_status("Q")

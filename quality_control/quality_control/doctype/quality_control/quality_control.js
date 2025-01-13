@@ -17,7 +17,8 @@ function open_batch_multiselect_dialog(frm) {
     let query_args = {
         query: "quality_control.quality_control.doctype.quality_control.quality_control.get_filtered_batches",
         filters: {
-            reference_name: frm.doc.reference_name
+            reference_name: frm.doc.reference_name,
+            item: frm.doc.item,
         }
     };
 
