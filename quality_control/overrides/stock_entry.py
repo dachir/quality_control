@@ -54,8 +54,6 @@ class CustomStockEntry(StockEntry):
         super().on_submit()
         for i in self.items:
             if i.to_quality_status == "Q":
-                serial_and_batch_bundle
-
                 batch_docs = frappe.db.sql(
                     """
                     SELECT sbe.batch_no, sbe.qty, type_of_transaction
@@ -65,8 +63,8 @@ class CustomStockEntry(StockEntry):
                 )
                 #AND type_of_transaction = 'Inward'
 
-                if type_of_transaction == "Inward":
-                    for b in batch_docs:
+                for b in batch_docs:
+                    if b.type_of_transaction == "Inward":
                         qc_doc = frappe.get_doc({
                             "doctype": "Quality Control",
                             "report_date": self.posting_date,
