@@ -4,11 +4,11 @@
 frappe.ui.form.on("Quality Control", {
     refresh: function(frm) {
         // Button to open the multiselect dialog
-        if (frm.doc.docstatus === 0) {
+        /*if (frm.doc.docstatus === 0) {
             frm.add_custom_button('Select Batch', () => {
                 open_batch_multiselect_dialog(frm);
             });
-        }
+        }*/
     }
 });
 

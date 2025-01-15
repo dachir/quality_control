@@ -54,18 +54,34 @@ class CustomStockEntry(StockEntry):
         super().on_submit()
         for i in self.items:
             if i.to_quality_status == "Q":
-                qc_doc = frappe.get_doc({
-                    "doctype": "Quality Control",
-                    "report_date": self.posting_date,
-                    "company": self.company,
-                    "item_code": i.item_code,
-                    "inspection_type": "Incoming",
-                    "reference_type": self.doctype,
-                    "reference_name": self.name,
-                })
+                serial_and_batch_bundle
 
-                qc_doc.insert()
+                batch_docs = frappe.db.sql(
+                    """
+                    SELECT sbe.batch_no, sbe.qty, type_of_transaction
+                    FROM `tabSerial and Batch Entry` sbe INNER JOIN `tabSerial and Batch Bundle` sbb ON sbb.name = sbe.parent
+                    WHERE voucher_no = %s 
+                    """, (self.name)
+                )
+                #AND type_of_transaction = 'Inward'
 
+                if type_of_transaction == "Inward":
+                    for b in batch_docs:
+                        qc_doc = frappe.get_doc({
+                            "doctype": "Quality Control",
+                            "report_date": self.posting_date,
+                            "company": self.company,
+                            "item_code": i.item_code,
+                            "inspection_type": b.type_of_transaction,
+                            "reference_type": self.doctype,
+                            "reference_name": self.name,
+                            "batch_no": b.batch_no,
+                            "balance_qty": b.qty,
+                        })
+
+                        qc_doc.insert()
+                #else:
+                #    qc_doc = frappe.get_doc("Quality Control", {"batch_no": b.batch_no})
 
 
 

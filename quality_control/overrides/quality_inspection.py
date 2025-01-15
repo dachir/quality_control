@@ -43,7 +43,7 @@ class CustomQualityInspection(QualityInspection):
             FROM `tabPurchase Receipt Item` 
             WHERE parent = %(reference_name)s
             UNION
-            SELECT DISTINCT IFNULL(s_warehouse,t_warehouse) AS warehouse, cost_center, branch
+            SELECT DISTINCT t_warehouse AS warehouse, cost_center, branch
             FROM `tabStock Entry Detail` 
             WHERE parent = %(reference_name)s
             """, {"reference_name": self.reference_name}, as_dict=1
