@@ -45,7 +45,7 @@ class CustomQualityInspection(QualityInspection):
             UNION
             SELECT DISTINCT t_warehouse AS warehouse, cost_center, branch
             FROM `tabStock Entry Detail` 
-            WHERE parent = %(reference_name)s
+            WHERE parent = %(reference_name)s AND NOT t_warehouse IS NULL
             """, {"reference_name": self.reference_name}, as_dict=1
         )
         warehouse = pr_details[0].warehouse

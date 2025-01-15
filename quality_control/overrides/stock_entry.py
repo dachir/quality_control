@@ -85,6 +85,8 @@ class CustomStockEntry(StockEntry):
                         qc_docs = frappe.db.get_list("Quality Control", {"batch_no": b.batch_no}, ["name"])
                         for name in qc_docs:
                             qc_doc = frappe.get_doc("Quality Control", name)
+                            if qc_doc.balance_qty > 0 :
+                                qty = min (i.qty, qc_doc.balance_qty)
 
 
 
