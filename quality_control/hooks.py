@@ -133,7 +133,7 @@ override_doctype_class = {
     "Item": "quality_control.overrides.item.CustomItem",
  	"Quality Inspection": "quality_control.overrides.quality_inspection.CustomQualityInspection",
     "Purchase Receipt": "quality_control.overrides.purchase_receipt.CustomPurchaseReceipt",
-    "Stock Entry": "quality_control.overrides.stock_entry.CustomStockEntry",
+    #"Stock Entry": "quality_control.overrides.stock_entry.CustomStockEntry",
 }
 
 # Document Events
