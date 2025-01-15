@@ -56,7 +56,7 @@ class CustomStockEntry(StockEntry):
             if i.to_quality_status == "Q":
                 batch_docs = frappe.db.sql(
                     """
-                    SELECT sbe.batch_no, sbe.qty, type_of_transaction
+                    SELECT sbe.batch_no, sbe.qty, sbb.type_of_transaction
                     FROM `tabSerial and Batch Entry` sbe INNER JOIN `tabSerial and Batch Bundle` sbb ON sbb.name = sbe.parent
                     WHERE voucher_no = %s 
                     """, (self.name)
