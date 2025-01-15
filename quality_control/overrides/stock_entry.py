@@ -52,7 +52,7 @@ class CustomStockEntry(StockEntry):
 
 
     def on_submit(self):
-        pass
+        pass #for testing
         super().on_submit()
         for i in self.items:
             if i.to_quality_status == "Q":
