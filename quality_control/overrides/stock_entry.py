@@ -5,6 +5,7 @@ from erpnext.stock.doctype.stock_entry.stock_entry import StockEntry
 class CustomStockEntry(StockEntry):
         
     def before_save(self):
+        pass
         empty_quality_rows = []  # List to store rows with missing quality status
         for idx, i in enumerate(self.items, start=1):  # Add `enumerate` to track row index
             if self.stock_entry_type == "Material Transfer":
@@ -51,6 +52,7 @@ class CustomStockEntry(StockEntry):
 
 
     def on_submit(self):
+        pass
         super().on_submit()
         for i in self.items:
             if i.to_quality_status == "Q":
@@ -78,8 +80,12 @@ class CustomStockEntry(StockEntry):
                         })
 
                         qc_doc.insert()
-                #else:
-                #    qc_doc = frappe.get_doc("Quality Control", {"batch_no": b.batch_no})
+                else:
+                    if self.stock_entry_type == "Material Transfer":
+                        qc_docs = frappe.db.get_list("Quality Control", {"batch_no": b.batch_no}, ["name"])
+                        for name in qc_docs:
+                            qc_doc = frappe.get_doc("Quality Control", name)
+
 
 
 
