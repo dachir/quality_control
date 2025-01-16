@@ -4,6 +4,25 @@ from erpnext.stock.doctype.quality_inspection.quality_inspection import QualityI
 
 class CustomQualityInspection(QualityInspection):
 
+    def validate(self):
+        if not self.readings and self.item_code:
+            self.get_item_specification_details()
+
+        if self.inspection_type == "In Process" and self.reference_type == "Job Card":
+            item_qi_template = frappe.db.get_value("Item", self.item_code, "quality_inspection_template")
+            parameters = get_template_details(item_qi_template)
+            for reading in self.readings:
+                for d in parameters:
+                    if reading.specification == d.specification:
+                        reading.update(d)
+                        reading.status = "Accepted"
+
+        if self.readings:
+            self.inspect_and_set_status()
+
+        #self.validate_inspection_required()
+        self.set_child_row_reference()
+
     def before_save(self):
         self.custom_control_quality = 1
         if flt(self.custom_process_qty) > flt(self.custom_balance_qty):
