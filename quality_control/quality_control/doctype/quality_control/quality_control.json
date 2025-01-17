@@ -84,19 +84,22 @@
    "oldfieldname": "batch_no",
    "oldfieldtype": "Link",
    "options": "Batch",
-   "read_only": 1
+   "read_only": 1,
+   "reqd": 1
   },
   {
    "fieldname": "batch_qty",
    "fieldtype": "Float",
    "label": "Quantity",
-   "read_only": 1
+   "read_only": 1,
+   "reqd": 1
   },
   {
    "fieldname": "balance_qty",
    "fieldtype": "Float",
    "label": "Balance Qty",
-   "read_only": 1
+   "read_only": 1,
+   "reqd": 1
   },
   {
    "fieldname": "company",
@@ -154,7 +157,7 @@
    "link_fieldname": "custom_quality_control"
   }
  ],
- "modified": "2025-01-13 10:46:08.714686",
+ "modified": "2025-01-17 17:29:20.934108",
  "modified_by": "Administrator",
  "module": "Quality Control",
  "name": "Quality Control",
