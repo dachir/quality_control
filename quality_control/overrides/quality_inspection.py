@@ -60,12 +60,12 @@ class CustomQualityInspection(QualityInspection):
             """
             SELECT DISTINCT warehouse, cost_center, branch
             FROM `tabPurchase Receipt Item` 
-            WHERE parent = %(reference_name)s
+            WHERE name = %(name)s
             UNION
             SELECT DISTINCT t_warehouse AS warehouse, cost_center, branch
             FROM `tabStock Entry Detail` 
-            WHERE parent = %(reference_name)s AND NOT t_warehouse IS NULL
-            """, {"reference_name": self.reference_name}, as_dict=1
+            WHERE name = %(name)s AND NOT t_warehouse IS NULL
+            """, {"name": self.detail_name}, as_dict=1
         )
         warehouse = pr_details[0].warehouse
         cost_center = pr_details[0].cost_center

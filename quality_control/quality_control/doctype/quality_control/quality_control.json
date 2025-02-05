@@ -18,6 +18,7 @@
   "batch_no",
   "batch_qty",
   "balance_qty",
+  "detail_name",
   "section_break_uxhf",
   "inspection_type",
   "reference_type",
@@ -146,6 +147,12 @@
    "hidden": 1,
    "label": "Status",
    "options": "Completed\nPartial\nNot Started\nDraft\nCancelled"
+  },
+  {
+   "fieldname": "detail_name",
+   "fieldtype": "Data",
+   "label": "Detail Name",
+   "read_only": 1
   }
  ],
  "icon": "fa fa-search",
@@ -157,7 +164,7 @@
    "link_fieldname": "custom_quality_control"
   }
  ],
- "modified": "2025-01-17 17:29:20.934108",
+ "modified": "2025-02-05 10:44:23.237384",
  "modified_by": "Administrator",
  "module": "Quality Control",
  "name": "Quality Control",
