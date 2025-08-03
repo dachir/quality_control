@@ -20,5 +20,16 @@
   "name": "Enable Quality Status",
   "script": "frappe.ui.form.on('Item', {\n\titem_group: function(frm) {\n        if (frm.doc.item_group) {\n            // Fetch the 'custom_control_quality' from the selected Item Group\n            frappe.db.get_value('Item Group', frm.doc.item_group, 'custom_control_quality')\n                .then(response => {\n                    const custom_control_quality = response.message.custom_control_quality;\n\n                    // Set the fetched value in the current form\n                    frm.set_value('custom_control_quality', custom_control_quality);\n                })\n                .catch(error => {\n                    console.error('Error fetching custom_control_quality:', error);\n                });\n        }\n    }\n})",
   "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Quality Inspection",
+  "enabled": 1,
+  "modified": "2025-08-03 17:46:39.720416",
+  "module": "Quality Control",
+  "name": "Quality Control Convert Factor",
+  "script": "frappe.ui.form.on('Quality Inspection', {\r\n\tcustom_process_qty(frm) {\r\n\t\tif (frm.doc.custom_conversion_factor) {\r\n\t\t\tlet new_val = flt(frm.doc.custom_process_qty) / flt(frm.doc.custom_conversion_factor);\r\n\t\t\tif (new_val !== frm.doc.custom_process_qty_ct) {\r\n\t\t\t\tfrm.set_value(\"custom_process_qty_ct\", new_val);\r\n\t\t\t}\r\n\t\t}\r\n\t},\r\n\tcustom_process_qty_ct(frm) {\r\n\t\tif (frm.doc.custom_conversion_factor) {\r\n\t\t\tlet new_val = flt(frm.doc.custom_process_qty_ct) * flt(frm.doc.custom_conversion_factor);\r\n\t\t\tif (new_val !== frm.doc.custom_process_qty) {\r\n\t\t\t\tfrm.set_value(\"custom_process_qty\", new_val);\r\n\t\t\t}\r\n\t\t}\r\n\t},\r\n});\r\n",
+  "view": "Form"
  }
 ]

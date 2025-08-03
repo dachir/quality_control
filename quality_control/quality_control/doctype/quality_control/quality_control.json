@@ -17,8 +17,11 @@
   "item_code",
   "batch_no",
   "batch_qty",
+  "quantity_ct",
   "balance_qty",
+  "balance_qty_ct",
   "detail_name",
+  "conversion_factor",
   "section_break_uxhf",
   "inspection_type",
   "reference_type",
@@ -153,6 +156,24 @@
    "fieldtype": "Data",
    "label": "Detail Name",
    "read_only": 1
+  },
+  {
+   "fieldname": "quantity_ct",
+   "fieldtype": "Float",
+   "label": "Quantity CT",
+   "read_only": 1
+  },
+  {
+   "fieldname": "balance_qty_ct",
+   "fieldtype": "Float",
+   "label": "Balance Qty CT",
+   "read_only": 1
+  },
+  {
+   "fieldname": "conversion_factor",
+   "fieldtype": "Float",
+   "label": "Conversion Factor",
+   "read_only": 1
   }
  ],
  "icon": "fa fa-search",
@@ -164,7 +185,7 @@
    "link_fieldname": "custom_quality_control"
   }
  ],
- "modified": "2025-02-05 10:44:23.237384",
+ "modified": "2025-08-03 17:08:51.073480",
  "modified_by": "Administrator",
  "module": "Quality Control",
  "name": "Quality Control",
@@ -186,6 +207,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "search_fields": "item_code, report_date",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
