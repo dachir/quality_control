@@ -13,6 +13,7 @@
   "manual_inspection",
   "amended_from",
   "status",
+  "next_quality_control",
   "column_break_4",
   "item_code",
   "batch_no",
@@ -174,6 +175,13 @@
    "fieldtype": "Float",
    "label": "Conversion Factor",
    "read_only": 1
+  },
+  {
+   "fieldname": "next_quality_control",
+   "fieldtype": "Link",
+   "label": "Next Quality Control",
+   "options": "Quality Control",
+   "read_only": 1
   }
  ],
  "icon": "fa fa-search",
@@ -185,7 +193,7 @@
    "link_fieldname": "custom_quality_control"
   }
  ],
- "modified": "2025-08-03 17:08:51.073480",
+ "modified": "2025-08-08 11:14:13.423250",
  "modified_by": "Administrator",
  "module": "Quality Control",
  "name": "Quality Control",
