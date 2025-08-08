@@ -25,7 +25,7 @@ class CustomQualityInspection(QualityInspection):
 
     def before_save(self):
         self.custom_control_quality = 1
-        if flt(self.custom_process_qty) > flt(self.custom_balance_qty):
+        if flt(self.custom_process_qty, 9) > flt(self.custom_balance_qty, 9):
             frappe.throw("You cannot control more quantity than expected.")
     
     def on_submit(self):
